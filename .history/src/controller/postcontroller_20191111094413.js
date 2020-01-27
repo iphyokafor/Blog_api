@@ -13,7 +13,7 @@ export default {
         try {
             const savedPost = await post.save();
             res.status(201).json({
-                message: 'Post added successfully',
+                message: 'Post added succesfully',
                 savedPost: savedPost
             });
         } catch (err) {

@@ -4,7 +4,6 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import postRoute from './routes/post_route.js';
 import userRoute from './routes/user_route';
-import swaggerDoc from '../docs/blog';
 require('dotenv/config');
 
 
@@ -14,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(cors());
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
+
 
 // mongodb connection string
 mongoose.connect(

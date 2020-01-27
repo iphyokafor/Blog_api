@@ -1,0 +1,423 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Dae Alright API",
+        "description": "This is a simple API",
+        "contact": {
+            "email": "sandraifeoma22@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [{
+        "url": "http://localhost:3000",
+        "description": "Dae-Alright Apis"
+    }],
+    "tags": [{
+        "name": "auth",
+        "description": "Operations available for authorization"
+    }],
+    "paths": {
+        "user/signup": {
+            "post": {
+                "tags": ["auth"],
+                "summary": "Register a user",
+                "description": "Successfully register a user",
+                "operationId": "addUser",
+                "requestBody": {
+                    "description": "User details",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User created"
+                    },
+                    "400": {
+                        "description": "Validation error"
+                    },
+                    "409": {
+                        "description": "a user already exists"
+                    }
+                }
+            }
+        },
+        "/products": {
+            "post": {
+                "tags": ["products"],
+                "summary": "Creates a product",
+                "description": " Successfully adds a product to the database",
+                "operationId": "createProduct",
+                "requestBody": {
+                    "description": "Product details",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Product"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "product successfully added"
+                    },
+                    "400": {
+                        "description": "attached file is not an image, please select image"
+                    },
+                    "409": {
+                        "description": "an existing item already exists"
+                    }
+                }
+            }
+        },
+        "/products/": {
+            "get": {
+                "tags": ["products"],
+                "summary": "Gets all products",
+                "description": "By passing in the appropriate options, you retrieve all the products in the database",
+                "operationId": "getAllProduct",
+                "responses": {
+                    "200": {
+                        "description": "View all products",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Product"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Your request cannot be processed at this time. Please try again later."
+                    }
+                }
+            }
+        },
+        "/vendors": {
+            "get": {
+                "tags": ["vendors"],
+                "summary": "Retrieves vendors",
+                "description": "By passing in the appropriate options, you retrieve all vendors registered",
+                "operationId": "vendorId",
+                "responses": {
+                    "200": {
+                        "description": "vendors retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/components/schemas/vendor"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Your request cannot be processed at this time. Please try again later."
+                    }
+                }
+            }
+        },
+        "/vendor": {
+            "get": {
+                "tags": ["vendors"],
+                "summary": "Retrieves a single vendor",
+                "description": "By passing in the appropriate options with the vendorId, you retrieve a specific vendor registered",
+                "operationId": "vendorId",
+                "responses": {
+                    "200": {
+                        "description": "vendor retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/components/schemas/vendor"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No vendor with id ${id} in the system"
+                    },
+                    "400": {
+                        "description": "Please provide a valid vendorId"
+                    }
+                }
+            }
+        },
+        "/vendors/location/search": {
+            "get": {
+                "tags": ["vendors"],
+                "summary": "Retrieves vendor by location",
+                "description": "By passing in the appropriate options with the vendorId, you retrieve vendors registered by their location",
+                "operationId": "vendorId",
+                "responses": {
+                    "200": {
+                        "description": "vendors retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/components/schemas/vendor"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No Restaurant found in this location"
+                    },
+                    "400": {
+                        "description": "Your request cannot be processed at this time. Please try again later."
+                    }
+                }
+            }
+        },
+        "/auth/google": {
+            "get": {
+                "tags": ["users"],
+                "summary": "sign up/in with google",
+                "description": "allows a user sign up or sign in to use the app with google oauth 2.0",
+                "operationID": "googleSignIn",
+                "responses": {
+                    "200": {
+                        "description": "user is signed in but already exists in the database",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "type": "string",
+                                            "description": "the authentication token"
+                                        },
+                                        "user": {
+                                            "type": "object",
+                                            "description": "the user object"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "user is signed in and added to the database",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "type": "string",
+                                            "description": "the authentication token"
+                                        },
+                                        "user": {
+                                            "type": "object",
+                                            "description": "the user object",
+
+                                            "schema": {
+                                                "$ref": "#/components/schemas/User"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "wrong access token or parameter",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "error message"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "redirects": "/google/redirect"
+                }
+            }
+        },
+        "/auth/facebook": {
+            "get": {
+                "tags": ["users"],
+                "summary": "sign up/in with facebook",
+                "description": "allows a user sign up or sign in to use the app with facebook oauth",
+                "operationID": "facebookSignIn",
+                "responses": {
+                    "200": {
+                        "description": "user is signed in but already exists in the database",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "type": "string",
+                                            "description": "the authentication token"
+                                        },
+                                        "user": {
+                                            "type": "object",
+                                            "description": "the user object"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "user is signed in and added to the database",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "type": "string",
+                                            "description": "the authentication token"
+                                        },
+                                        "user": {
+                                            "type": "object",
+                                            "description": "the user object",
+
+                                            "schema": {
+                                                "$ref": "#/components/schemas/User"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "wrong access token or parameter",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "error message"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "redirects": "/facebook/callback"
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "User": {
+                "required": ["firstName", "lastName", "email", "password", "phone"],
+                "type": "object",
+                "properties": {
+                    "firstName": {
+                        "type": "string",
+                        "example": "sandra"
+                    },
+                    "lastName": {
+                        "type": "string",
+                        "example": "okafor"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "okafor@gmail.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "password",
+                        "description": "Must be atleast 8 characters"
+                    },
+                    "phone": {
+                        "type": "string",
+                        "example": "09065387654"
+                    },
+                    "address": {
+                        "type": "string",
+                        "example": "arab road kubwa"
+                    }
+                }
+            },
+            "Product": {
+                "required": ["name", "price", "quantity", "description", "createdAt", "imageUrl"],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "Pineapple - Golden"
+                    },
+                    "price": {
+                        "type": "Number",
+                        "example": 609.17
+                    },
+                    "quantity": {
+                        "type": "string",
+                        "example": "2"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Integer ac leo."
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2020-01-14T09:12:57.001Z"
+                    },
+                    "imageUrl": {
+                        "type": "string",
+                        "example": "http://dummyimage.com/173x164.jpg/ff4444/ffffff"
+                    }
+                }
+            },
+            "vendor": {
+                "required": ["name"],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "Pixope"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "nkassel5@unesco.org"
+                    },
+                    "location": {
+                        "type": "string",
+                        "example": "3 Coleman Hill"
+                    },
+                    "phone": {
+                        "type": "string",
+                        "example": "977-817-9356"
+                    }
+                }
+            }
+        }
+    }
+}

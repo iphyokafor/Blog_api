@@ -4,7 +4,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import postRoute from './routes/post_route.js';
 import userRoute from './routes/user_route';
-import swaggerDoc from '../docs/blog';
+import swaggerdoc from '../docs/blog';
 require('dotenv/config');
 
 
