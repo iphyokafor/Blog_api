@@ -49,6 +49,5 @@ const loginValidation = (data) => {
     return Joi.validate(data, schema);
 };
 
-// module.exports.registerValidation = registerValidation;
-// module.exports.loginValidation = loginValidation;
-export default { registerValidation, loginValidation };
+module.exports.registerValidation = registerValidation;
+module.exports.loginValidation = loginValidation;

@@ -30,12 +30,8 @@ export default {
         try {
             const savedUser = await user.save();
             // res.send(savedUser);
-            // res.send({
-            //     message: "User successfully registered",
-            //     user: user._id
-            // });
-            res.status(201, {
-                message: "user successfully registered",
+            res.send({
+                message: "User successfully registered",
                 user: user._id
             });
             // console.log(savedUser);
