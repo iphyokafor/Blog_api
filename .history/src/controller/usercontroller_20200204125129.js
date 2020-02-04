@@ -57,7 +57,7 @@ export default {
 
         const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
         res.header('auth-token', token).send({
-            status: 200,
+            status: 201,
             token,
             message: 'logged in'
         });
